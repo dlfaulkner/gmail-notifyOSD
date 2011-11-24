@@ -49,46 +49,32 @@ color1 ffffff
 color2 ffffff
 
 
-#lua_load ~/.conky/conkybg.lua
-#lua_draw_hook_pre conky_draw_bg
-
 TEXT
+#CPU Usage, set for a quad core system
 ${voffset 5}
-${goto 92}CPU1 usage: ${font Ubuntu:style=Bold:size=9}${color1}${cpu cpu1}%${font}${color} ${alignr 20}CPU2 usage: ${font Ubuntu:style=Bold:size=9}${color1}${cpu cpu2}%${font}${color}
+${goto 92}CPU1 usage: ${font Ubuntu:style=Bold:size=9}${color0}${cpu cpu1}%${color}${font} ${alignr 20}CPU2 usage: ${font Ubuntu:style=Bold:size=9}${color0}${cpu cpu2}%${color}${font}
 
-${goto 92}CPU3 usage: ${font Ubuntu:style=Bold:size=9}${color1}${cpu cpu3}%${font}${color} ${alignr 20}CPU4 usage: ${font Ubuntu:style=Bold:size=9}${color1}${cpu cpu4}%${font}${color}
-
-
-${goto 92}RAM:${color1} ${font Ubuntu:style=Bold:size=9}${memperc}%${font}${color}${font Ubuntu:style=Bold:size=9}${font}     Free: ${font Ubuntu:style=Bold:size=9}${color2}${memeasyfree}${color} ${font}${alignr 22}Used: ${font Ubuntu:style=Bold:size=9}${color2}${mem}${color}${font}
-
-${goto 92}HDD:${color1} ${font Ubuntu:style=Bold:size=9}${fs_used_perc /home}%${font}${color}     Free: ${color2}${font Ubuntu:style=Bold:size=9}${fs_free /home}${color}${font} ${alignr 22}Used: ${font Ubuntu:style=Bold:size=9}${color2}${fs_used /home}${color}${font}
-
-${if_up wlan0}
-${voffset -4}${goto 92}${voffset -6}Upload: ${font Ubuntu:style=Bold:size=9}${color1}${upspeed wlan0}${color}${font} ${goto 230}Insgesamt: ${font Ubuntu:style=Bold:size=9}${color2}${totalup wlan0}${color}${font}
-${voffset 4}${goto 92}Signal:   ${font Ubuntu:style=Bold:size=9}${color1}${wireless_link_qual wlan0}%${color}${font} ${alignr 15}
-${voffset 4}${goto 92}Down:   ${font Ubuntu:style=Bold:size=9}${color1}${downspeed wlan0}${color}${font} ${goto 230}Insgesamt: ${font Ubuntu:style=Bold:size=9}${color2}${totaldown wlan0}${color}${font}
+${goto 92}CPU3 usage: ${font Ubuntu:style=Bold:size=9}${color0}${cpu cpu3}%${color}${font} ${alignr 20}CPU4 usage: ${font Ubuntu:style=Bold:size=9}${color0}${cpu cpu4}%${color}${font}
 
 
+#Ram usage
+${voffset -1}${goto 92}RAM: ${font Ubuntu:style=Bold:size=9}${color0}${memperc}%${color}${font}${goto 164}Free: ${font Ubuntu:style=Bold:size=9}${color0}${memeasyfree} ${color}${font}${alignr 22}Used: ${font Ubuntu:style=Bold:size=9}${color0}${mem}${color}${font}
 
+#HDD usage
+${goto 92}HDD: ${font Ubuntu:style=Bold:size=9}${color0}${fs_used_perc /home}%${color}${font}${goto 164}Free: ${font Ubuntu:style=Bold:size=9}${color0}${fs_free /home} ${color}${font}${alignr 22}Used: ${font Ubuntu:style=Bold:size=9}${color0}${fs_used /home}${color}${font}
+
+# |--WLAN0
+${if_up wlan0}${image ~/.conky/base.png -p 10,146 -s 339x86}${image ~/.conky/wlan100.png -p 32,166 -s 45x45}
+${voffset -3}${goto 92}Down: ${font Ubuntu:style=Bold:size=9}${color0}${downspeed wlan0}${color}${font}${goto 223}Total down: ${font Ubuntu:style=Bold:size=9}${color0}${totaldown wlan0}${color}${font}
+${goto 92}Signal: ${font Ubuntu:style=Bold:size=9}${color0}${wireless_link_qual wlan0}%${color}${font}
+${goto 92}Up: ${font Ubuntu:style=Bold:size=9}${color0}${upspeed wlan0}${color}${font}${goto 235}Total up: ${font Ubuntu:style=Bold:size=9}${color0}${totalup wlan0}${color}${font}
 # |--ETH0
-${else}${if_up eth0}
-${voffset -13}${color0}${font}${color}${goto 92}${voffset 10}Down: ${font 
-Ubuntu:style=Bold:size=9}${color1}${downspeed eth0}${font}${color}${goto 223}Total down: ${font Ubuntu:style=Bold:size=9}${color2}${totaldown eth0}${font}${color}
-${voffset -2}${color0}${font}${color}${goto 92}${voffset 16}Up: ${font 
-Ubuntu:style=Bold:size=9}${color1}${upspeed eth0}${font}${color}${goto 235}Total up: ${font Ubuntu:style=Bold:size=9}${color2}${totalup eth0}${font}${color}
-#${voffset -2}${color0}${font Poky:size=13}w${font}${color}${goto 92}${voffset -4}Lokale IP: ${alignr 15}${color2}${addr eth0}${color}
-#${goto 92}Öffentliche IP: ${alignr 15}${color2}${execi 10800 ~/.conkycolors/bin/conkyIp}${color}
-# |--PPP0
-${endif}${else}${if_up ppp0}
-${voffset -13}${color0}${font}${color}${goto 92}${voffset -6}Down: ${font 
-Ubuntu:style=Bold:size=9}${color1}${downspeed ppp0}${color}${font} ${alignr 15}${color2}${downspeedgraph ppp0 8,60 92B6F1 CCDFFF}${color}
-${goto 92}Insgesamt: ${color2}${totaldown ppp0}${color}
-${voffset -2}${color0}${font}${color}${goto 92}${voffset -6}Up: ${font 
-Ubuntu:style=Bold:size=9}${color1}${upspeed ppp0}${color}${font} ${alignr 15}${color2}${upspeedgraph ppp0 8,60 92B6F1 CCDFFF}${color}
-${goto 92}Insgesamt: ${color2}${totalup ppp0}${color}
-#${voffset -2}${color0}${font Poky:size=13}w${font}${color}${goto 92}${voffset -4}Lokale IP: ${alignr 15}${color2}${addr ppp0}${color}
-${endif}${else}${voffset 4}${color0}${font}${color}${goto 92}No internet connection${endif}
+${else}${if_up eth0}${image ~/.conky/base.png -p 10,146 -s 339x86}${image ~/.conky/eth.png -p 32,166 -s 45x45}
+${voffset -3}${goto 92}Down: ${font Ubuntu:style=Bold:size=9}${color0}${downspeed eth0}${color}${font}${goto 223}Total down: ${font Ubuntu:style=Bold:size=9}${color0}${totaldown eth0}${color}${font}
 
-${execpi 300 python ~/.conky/gmail_parser3.py yourusername yourpassword 3}
+${goto 92}Up: ${font Ubuntu:style=Bold:size=9}${color0}${upspeed eth0}${color}${font}${goto 235}Total up: ${font Ubuntu:style=Bold:size=9}${color0}${totalup eth0}${color}${font}${endif}
+#${else}${voffset 26}${font Ubuntu:style=Bold:size=9}${color0}${goto 92}No internet connection!$${color}${font}{endif} #Not working. 
 
-${image ~/.conky/base.png -p 10,0 -s 339x86}${image ~/.conky/base.png -p 10,146 -s 339x86}${image ~/.conky/base.png -p 10,73 -s 339x86}${image ~/.conky/base.png -p 10,219 -s 339x86}${image ~/.conky/Task_Manager.png -p 32,20 -s 45x45}${image ~/.conky/Memory.png -p 32,93 -s 45x45}${image ~/.conky/wlan100.png -p 32,166 -s 45x45}${image ~/.conky/mail.png -p 32,239 -s 45x45}
+#${execpi 300 python ~/.conky/gmail_parser3.py yourusername yourpassword 3}
+
+${image ~/.conky/base.png -p 10,0 -s 339x86}${image ~/.conky/base.png -p 10,73 -s 339x86}${image ~/.conky/base.png -p 10,219 -s 339x86}${image ~/.conky/Task_Manager.png -p 32,20 -s 45x45}${image ~/.conky/Memory.png -p 32,93 -s 45x45}${image ~/.conky/mail.png -p 32,239 -s 45x45}
